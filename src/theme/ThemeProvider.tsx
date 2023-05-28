@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
 import { createTheme } from "@mui/material";
 import GlobalStyles from "./globalStyles";
 import componentsOverride from "./overrides";
 import typography from "./typography";
 
-type Props = { children: React.ReactNode };
+type Props = { children: ReactNode };
 
 export default function ThemeProvider({ children }: Props) {
   const themeOptions = {

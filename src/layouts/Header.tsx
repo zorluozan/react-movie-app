@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { AppBar, Box, Toolbar, Link, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
-const pages = ["Movies", "TV Shows", "Suggest me"];
+const pages = ["Movies", "TV Shows"];
 
 function Header() {
   return (
