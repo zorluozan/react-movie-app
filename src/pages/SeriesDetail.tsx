@@ -11,30 +11,33 @@ import {
   CircularProgress,
   useTheme,
 } from "@mui/material";
-import { IMovieData } from "../@types/movie";
+import { ISeriesData } from "../@types/series";
 
-function MovieDetail() {
-  const [movieData, setMovieData] = useState<IMovieData | null>(null);
-  let { movieId } = useParams();
+function SeriesDetail() {
+  const [seriesData, setSeriesData] = useState<ISeriesData | null>(null);
+  let { seriesId } = useParams();
   const theme = useTheme();
 
-  const getMovieById = async (): Promise<IMovieData> => {
+  const getSeriesById = async (): Promise<ISeriesData> => {
     const { data } = await axios.get(
-      `${BASE_URL}movie/${movieId}?api_key=${API_KEY}`
+      `${BASE_URL}tv/${seriesId}?api_key=${API_KEY}`
     );
     return data;
   };
 
-  const { data, isLoading } = useQuery<IMovieData>("movieDetail", getMovieById);
+  const { data, isLoading } = useQuery<ISeriesData>(
+    "seriesDetail",
+    getSeriesById
+  );
 
   useEffect(() => {
     if (data) {
-      setMovieData(data);
+      setSeriesData(data);
     }
   }, [data]);
 
-  const posterUrl = `https://image.tmdb.org/t/p/w500/${movieData?.poster_path}`;
-  const backdropUrl = `https://image.tmdb.org/t/p/w500/${movieData?.backdrop_path}`;
+  const posterUrl = `https://image.tmdb.org/t/p/w500/${seriesData?.poster_path}`;
+  const backdropUrl = `https://image.tmdb.org/t/p/w500/${seriesData?.backdrop_path}`;
 
   return (
     <Container disableGutters>
@@ -43,7 +46,7 @@ function MovieDetail() {
           <CircularProgress />
         </Box>
       ) : (
-        movieData && (
+        seriesData && (
           <Box sx={{ padding: "40px 0 160px 0" }}>
             <Box
               sx={{
@@ -55,7 +58,7 @@ function MovieDetail() {
               <img
                 style={{ width: "100%" }}
                 src={backdropUrl}
-                alt={movieData?.title}
+                alt={seriesData?.name}
               />
             </Box>
             <Box
@@ -71,7 +74,7 @@ function MovieDetail() {
               }}
             >
               <Typography variant="h4" sx={{ color: "#fff" }}>
-                {movieData?.original_title}
+                {seriesData?.original_name}
               </Typography>
             </Box>
             <Grid container spacing={5}>
@@ -88,7 +91,7 @@ function MovieDetail() {
                       width: "100%",
                     }}
                     src={posterUrl}
-                    alt={movieData?.title}
+                    alt={seriesData?.name}
                   />
                 </Box>
               </Grid>
@@ -98,24 +101,23 @@ function MovieDetail() {
                     variant="h3"
                     sx={{
                       fontSize: "24px",
-                      fontWeight: "700",
+                      fontWeight: theme.typography.fontWeightBold,
                       color: theme.palette.primary.title,
                       marginBottom: "24px",
                     }}
                   >
-                    {movieData?.tagline}
+                    {seriesData?.tagline}
                   </Typography>
                   <Typography
                     variant="body1"
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "400",
-                      color: theme.palette.primary.text,
+                      color: "#8E95A9",
                       lineHeight: "32px",
                       marginBottom: "24px",
                     }}
                   >
-                    {movieData?.overview}
+                    {seriesData?.overview}
                   </Typography>
                 </Box>
 
@@ -137,28 +139,28 @@ function MovieDetail() {
                     alt="Star"
                     style={{ marginRight: "4px" }}
                   />
-                  {movieData?.vote_average.toFixed(1)}
+                  {seriesData?.vote_average.toFixed(1)}
                 </Box>
 
                 <Box sx={{ marginBottom: "24px" }}>
                   <Typography
                     sx={{
                       fontSize: "16px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#767E94",
                       marginBottom: "8px",
                     }}
                   >
-                    Release Date
+                    First Air Date
                   </Typography>
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#C3C8D4",
                     }}
                   >
-                    {movieData?.release_date}
+                    {seriesData?.first_air_date}
                   </Typography>
                 </Box>
 
@@ -166,7 +168,7 @@ function MovieDetail() {
                   <Typography
                     sx={{
                       fontSize: "16px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#767E94",
                       marginBottom: "8px",
                     }}
@@ -176,16 +178,16 @@ function MovieDetail() {
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#C3C8D4",
                     }}
                   >
-                    {movieData?.production_companies.map(
+                    {seriesData?.production_companies.map(
                       (company: any, index: number) => (
                         <span key={company.id}>
                           {company.name}
-                          {index < movieData.production_companies.length - 1 &&
-                            ", "}
+                          {index <
+                            seriesData?.production_companies.length - 1 && ", "}
                         </span>
                       )
                     )}
@@ -196,21 +198,21 @@ function MovieDetail() {
                   <Typography
                     sx={{
                       fontSize: "16px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#767E94",
                       marginBottom: "8px",
                     }}
                   >
-                    Run time
+                    Status
                   </Typography>
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#C3C8D4",
                     }}
                   >
-                    {movieData?.runtime} min
+                    {seriesData?.status}
                   </Typography>
                 </Box>
 
@@ -218,7 +220,7 @@ function MovieDetail() {
                   <Typography
                     sx={{
                       fontSize: "16px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#767E94",
                       marginBottom: "8px",
                     }}
@@ -228,15 +230,15 @@ function MovieDetail() {
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "400",
+                      fontWeight: theme.typography.fontWeightRegular,
                       color: "#C3C8D4",
                     }}
                     variant="body1"
                   >
-                    {movieData?.genres.map((genre: any, index: number) => (
+                    {seriesData?.genres.map((genre: any, index: number) => (
                       <span key={genre.id}>
                         {genre.name}
-                        {index < movieData.genres.length - 1 && ", "}
+                        {index < seriesData?.genres.length - 1 && ", "}
                       </span>
                     ))}
                   </Typography>
@@ -250,4 +252,4 @@ function MovieDetail() {
   );
 }
 
-export default MovieDetail;
+export default SeriesDetail;

@@ -4,20 +4,14 @@ import { createTheme } from "@mui/material";
 import GlobalStyles from "./globalStyles";
 import componentsOverride from "./overrides";
 import typography from "./typography";
+import palette from "./palette";
 
 type Props = { children: ReactNode };
 
 export default function ThemeProvider({ children }: Props) {
   const themeOptions = {
+    palette: palette(),
     typography,
-    // palette: {
-    //   primary: {
-    //     main: "#0052cc",
-    //   },
-    //   secondary: {
-    //     main: "#edf2ff",
-    //   },
-    // },
   };
 
   const theme = createTheme(themeOptions);

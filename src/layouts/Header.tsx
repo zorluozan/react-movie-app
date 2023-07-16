@@ -1,8 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 import { AppBar, Box, Toolbar, Link, Container } from "@mui/material";
-import { Outlet } from "react-router-dom";
 
-const pages = ["Movies", "TV Shows"];
+const pages = ["Movies", "Series"];
 
 function Header() {
   return (
@@ -30,7 +29,6 @@ function Header() {
           </Box>
         </Toolbar>
       </AppBar>
-      <Outlet />
     </Container>
   );
 }

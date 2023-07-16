@@ -1,6 +1,9 @@
 import { GlobalStyles as MUIGlobalStyles } from "@mui/material";
+import palette from "./palette";
 
 export default function GlobalStyles() {
+  const themeColor = palette();
+
   const inputGlobalStyles = (
     <MUIGlobalStyles
       styles={{
@@ -12,7 +15,7 @@ export default function GlobalStyles() {
           boxSizing: "border-box",
         },
         body: {
-          backgroundColor: "#121829",
+          backgroundColor: themeColor.primary["main"],
         },
         ul: {
           margin: 0,

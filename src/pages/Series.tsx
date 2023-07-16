@@ -11,40 +11,40 @@ import {
   InputAdornment,
   Container,
 } from "@mui/material";
-import MovieCard from "../components/MovieCard";
+import SeriesCard from "../components/SeriesCard";
 
-function Movies() {
+function Series() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchMovies = async () => {
+  const fetchSeries = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}movie/popular?api_key=${API_KEY}`
+      `${BASE_URL}tv/popular?api_key=${API_KEY}`
     );
     return data.results;
   };
 
-  const fetchTopRatedMovies = async () => {
+  const fetchTopRatedSeries = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}movie/top_rated?api_key=${API_KEY}`
+      `${BASE_URL}tv/top_rated?api_key=${API_KEY}`
     );
     return data.results;
   };
 
-  const searchMovie = async () => {
+  const searchSeries = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}search/movie?query=${searchTerm}&api_key=${API_KEY}`
+      `${BASE_URL}search/tv?query=${searchTerm}&api_key=${API_KEY}`
     );
     return data.results;
   };
 
-  const { data: movieData } = useQuery("movies", fetchMovies);
-  const { data: topRatedMovies } = useQuery(
-    "topRatedMovies",
-    fetchTopRatedMovies
+  const { data: seriesData } = useQuery("series", fetchSeries);
+  const { data: topRatedSeries } = useQuery(
+    "topRatedSeries",
+    fetchTopRatedSeries
   );
   const { data: searchResults } = useQuery(
     ["search", searchTerm],
-    searchMovie,
+    searchSeries,
     {
       enabled: searchTerm !== "",
     }
@@ -53,11 +53,10 @@ function Movies() {
   function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
   }
-
   return (
     <Container disableGutters>
       <Box sx={{ padding: "64px 0", maxWidth: "590px" }}>
-        <Typography variant="h1">Movies</Typography>
+        <Typography variant="h1">Series</Typography>
         <FormControl
           fullWidth
           sx={{
@@ -71,7 +70,7 @@ function Movies() {
             id="search"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="Search Movies"
+            placeholder="Search Series"
             startAdornment={
               <InputAdornment position="start">
                 <svg
@@ -109,7 +108,7 @@ function Movies() {
           marginBottom: "24px",
         }}
       >
-        Popular Movies ({searchResults?.length || movieData?.length})
+        Popular Series ({searchResults?.length || seriesData?.length})
       </Typography>
 
       <Grid
@@ -118,11 +117,11 @@ function Movies() {
         columnSpacing={3}
         sx={{ marginBottom: "120px" }}
       >
-        {Object.keys(searchResults || movieData || {}).map((key) => {
-          const movie = movieData[key];
+        {Object.keys(searchResults || seriesData || {}).map((key) => {
+          const series = seriesData[key];
           return (
-            <Grid item xs={6} md={3} key={movie.id}>
-              <MovieCard movie={movie} />
+            <Grid item xs={6} md={3} key={series.id}>
+              <SeriesCard series={series} />
             </Grid>
           );
         })}
@@ -136,7 +135,7 @@ function Movies() {
           marginBottom: "24px",
         }}
       >
-        Top Rated Movies ({topRatedMovies?.length})
+        Top Rated Series ({topRatedSeries?.length})
       </Typography>
 
       <Grid
@@ -145,11 +144,11 @@ function Movies() {
         columnSpacing={3}
         sx={{ marginBottom: "120px" }}
       >
-        {Object.keys(topRatedMovies || {}).map((key) => {
-          const movie = topRatedMovies[key];
+        {Object.keys(topRatedSeries || {}).map((key) => {
+          const series = topRatedSeries[key];
           return (
-            <Grid item xs={6} md={3} key={movie.id}>
-              <MovieCard movie={movie} />
+            <Grid item xs={6} md={3} key={series.id}>
+              <SeriesCard series={series} />
             </Grid>
           );
         })}
@@ -158,4 +157,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default Series;

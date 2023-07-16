@@ -7,23 +7,23 @@ import {
   useTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IMovieType } from "../@types/movie";
+import { ISeriesType } from "../@types/series";
 
-function MovieCard({ movie }: IMovieType) {
-  const imageUrl = `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`;
+function SeriesCard({ series }: ISeriesType) {
+  const imageUrl = `https://image.tmdb.org/t/p/w500/${series?.backdrop_path}`;
   const theme = useTheme();
 
   const navigate = useNavigate();
 
   const handleCardClick = (id: string) => {
-    navigate(`/movies/${id}`);
+    navigate(`/series/${id}`);
   };
 
   return (
     <Card
-      key={movie.id}
+      key={series.id}
       sx={{ height: "100%", cursor: "pointer" }}
-      onClick={() => handleCardClick(movie.id.toString())}
+      onClick={() => handleCardClick(series.id.toString())}
     >
       <Box
         sx={{
@@ -45,10 +45,10 @@ function MovieCard({ movie }: IMovieType) {
           alt="Star"
           style={{ marginRight: "4px" }}
         />
-        {movie.vote_average.toFixed(1)}
+        {series?.vote_average.toFixed(1)}
       </Box>
 
-      <CardMedia component="img" image={imageUrl} alt={movie.original_title} />
+      <CardMedia component="img" image={imageUrl} alt={series?.name} />
       <CardContent>
         <Typography
           gutterBottom
@@ -56,11 +56,11 @@ function MovieCard({ movie }: IMovieType) {
           component="div"
           sx={{ color: theme.palette.primary.title, letterSpacing: "0.02em" }}
         >
-          {movie.original_title || movie.original_name}
+          {series?.original_name}
         </Typography>
       </CardContent>
     </Card>
   );
 }
 
-export default MovieCard;
+export default SeriesCard;

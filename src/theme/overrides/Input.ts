@@ -6,7 +6,7 @@ export default function Input(theme: Theme) {
       styleOverrides: {
         root: {
           fontSize: "14px",
-          color: "#475069",
+          color: theme.palette.primary.inputColor,
           padding: "10px",
           "&::before": {
             borderBottom: "none",

@@ -8,7 +8,7 @@ export default function Link(theme: Theme) {
       },
       styleOverrides: {
         root: {
-          color: "#A8AEBF",
+          color: theme.palette.primary.link,
           fontSize: 16,
           fontWeight: theme.typography.fontWeightRegular,
           letterSpacing: "0.02em",

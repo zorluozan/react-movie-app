@@ -3,14 +3,6 @@ import { Theme } from "@mui/material/styles";
 export default function Typography(theme: Theme) {
   return {
     MuiTypography: {
-      //   styleOverrides: {
-      //     paragraph: {
-      //       marginBottom: theme.spacing(2),
-      //     },
-      //     gutterBottom: {
-      //       marginBottom: theme.spacing(1),
-      //     },
-      //   },
       variants: [
         {
           props: {
@@ -19,7 +11,7 @@ export default function Typography(theme: Theme) {
           style: {
             fontSize: 64,
             fontWeight: theme.typography.fontWeightBold,
-            color: "#EBEEF5",
+            color: theme.palette.primary.title,
             marginBottom: 16,
           },
         },
@@ -28,10 +20,8 @@ export default function Typography(theme: Theme) {
             variant: "body1",
           },
           style: {
-            fontSize: 16,
             fontWeight: theme.typography.fontWeightRegular,
-            color: "#8E95A9",
-            lineHeight: "24px",
+            color: theme.palette.primary.text,
           },
         },
       ],
